@@ -49,6 +49,11 @@ public class SeyrenConfig {
 	// \u2753,\u2600,\u2601,\u26A1,\u2757
 	private final String flowdockEmojis;
 
+    private final String snmpTrapOID;
+    private final String snmpCommunity;
+    private final String snmpTimeout;
+    private final String snmpRetries;
+
 	public SeyrenConfig() {
 
 		// Base
@@ -80,7 +85,15 @@ public class SeyrenConfig {
 		this.flowdockExternalUsername = configOrDefault("FLOWDOCK_EXTERNAL_USERNAME", "Seyren");
 		this.flowdockTags = configOrDefault("FLOWDOCK_TAGS", "");
 		this.flowdockEmojis = configOrDefault("FLOWDOCK_EMOJIS", "");
+
+        // SNMP
+        this.snmpTrapOID = configOrDefault("SNMP_OID","1.3.6.1.4.1.94843.1.2");
+        this.snmpCommunity = configOrDefault("SNMP_COMMUNITY","public");
+        this.snmpTimeout = configOrDefault("SNMP_TIMEOUT","5000");
+        this.snmpRetries = configOrDefault("SNMP_RETRIES","2");
 	}
+
+
 
 	public String getBaseUrl() {
 		return baseUrl;
@@ -170,6 +183,26 @@ public class SeyrenConfig {
 	public Integer getSmtpPort() {
 		return smtpPort;
 	}
+
+    @JsonIgnore
+    public String getSnmpTrapOID(){
+        return snmpTrapOID;
+    }
+
+    @JsonIgnore
+    public String getSnmpCommunity(){
+        return snmpCommunity;
+    }
+
+    @JsonIgnore
+    public int getSnmpTimeout(){
+        return Integer.valueOf(snmpTimeout);
+    }
+
+    @JsonIgnore
+    public int getSnmpRetries(){
+        return Integer.valueOf(snmpRetries);
+    }
 
 	private static String configOrDefault(String propertyName, String defaultValue) {
 		return configOrDefault(list(propertyName), defaultValue);
