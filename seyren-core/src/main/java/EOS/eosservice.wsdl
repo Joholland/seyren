@@ -1,0 +1,930 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="EosService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                  xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://www.w3.org/ns/ws-policy"
+                  xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+                  xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+                  xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+                  xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+                  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:SecureConversationToken
+                                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                                    <wsp:Policy>
+                                        <sp:RequireDerivedKeys/>
+                                        <sp:BootstrapPolicy>
+                                            <wsp:Policy>
+                                                <sp:SignedParts>
+                                                    <sp:Body/>
+                                                    <sp:Header Name="To"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                    <sp:Header Name="From"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                    <sp:Header Name="FaultTo"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                    <sp:Header Name="ReplyTo"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                    <sp:Header Name="MessageID"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                    <sp:Header Name="RelatesTo"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                    <sp:Header Name="Action"
+                                                               Namespace="http://www.w3.org/2005/08/addressing"/>
+                                                </sp:SignedParts>
+                                                <sp:EncryptedParts>
+                                                    <sp:Body/>
+                                                </sp:EncryptedParts>
+                                                <sp:SymmetricBinding>
+                                                    <wsp:Policy>
+                                                        <sp:ProtectionToken>
+                                                            <wsp:Policy>
+                                                                <sp:SpnegoContextToken
+                                                                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                                                                    <wsp:Policy>
+                                                                        <sp:RequireDerivedKeys/>
+                                                                    </wsp:Policy>
+                                                                </sp:SpnegoContextToken>
+                                                            </wsp:Policy>
+                                                        </sp:ProtectionToken>
+                                                        <sp:AlgorithmSuite>
+                                                            <wsp:Policy>
+                                                                <sp:Basic256/>
+                                                            </wsp:Policy>
+                                                        </sp:AlgorithmSuite>
+                                                        <sp:Layout>
+                                                            <wsp:Policy>
+                                                                <sp:Strict/>
+                                                            </wsp:Policy>
+                                                        </sp:Layout>
+                                                        <sp:IncludeTimestamp/>
+                                                        <sp:EncryptSignature/>
+                                                        <sp:OnlySignEntireHeadersAndBody/>
+                                                    </wsp:Policy>
+                                                </sp:SymmetricBinding>
+                                                <sp:Wss11>
+                                                    <wsp:Policy/>
+                                                </sp:Wss11>
+                                                <sp:Trust10>
+                                                    <wsp:Policy>
+                                                        <sp:MustSupportIssuedTokens/>
+                                                        <sp:RequireClientEntropy/>
+                                                        <sp:RequireServerEntropy/>
+                                                    </wsp:Policy>
+                                                </sp:Trust10>
+                                            </wsp:Policy>
+                                        </sp:BootstrapPolicy>
+                                    </wsp:Policy>
+                                </sp:SecureConversationToken>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Strict/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:EncryptSignature/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy/>
+                </sp:Wss11>
+                <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:MustSupportIssuedTokens/>
+                        <sp:RequireClientEntropy/>
+                        <sp:RequireServerEntropy/>
+                    </wsp:Policy>
+                </sp:Trust10>
+                <wsam:Addressing>
+                    <wsp:Policy>
+                        <wsam:AnonymousResponses/>
+                    </wsp:Policy>
+                </wsam:Addressing>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetNodeMaintenanceModeByName_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetNodeMaintenanceModeByName_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetServiceInstanceMaintenanceModeByName_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetServiceInstanceMaintenanceModeByName_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetMaintenanceModeByList_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetMaintenanceModeByList_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetNoOpModeByKey_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_SetNoOpModeByKey_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_Convict_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_Convict_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_ConvictServiceInstance_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_ConvictServiceInstance_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_DeployService_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_DeployService_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_DeployServiceToMachines_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_DeployServiceToMachines_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_NotifyNodeFailure_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_NotifyNodeFailure_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_RotationChanged_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_RotationChanged_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_Interrogate_Input_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="WSHttpBinding_IEosService_Interrogate_output_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://tempuri.org/Imports">
+            <xsd:import schemaLocation="http://eos.sb.karmalab.net:8000/EosService?xsd=xsd0"
+                        namespace="http://tempuri.org/"/>
+            <xsd:import schemaLocation="http://eos.sb.karmalab.net:8000/EosService?xsd=xsd1"
+                        namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="IEosService_SetNodeMaintenanceModeByName_InputMessage">
+        <wsdl:part name="parameters" element="tns:SetNodeMaintenanceModeByName"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetNodeMaintenanceModeByName_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SetNodeMaintenanceModeByNameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetServiceInstanceMaintenanceModeByName_InputMessage">
+        <wsdl:part name="parameters" element="tns:SetServiceInstanceMaintenanceModeByName"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetServiceInstanceMaintenanceModeByName_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SetServiceInstanceMaintenanceModeByNameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetMaintenanceModeByList_InputMessage">
+        <wsdl:part name="parameters" element="tns:SetMaintenanceModeByList"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetMaintenanceModeByList_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SetMaintenanceModeByListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetNoOpModeByKey_InputMessage">
+        <wsdl:part name="parameters" element="tns:SetNoOpModeByKey"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_SetNoOpModeByKey_OutputMessage">
+        <wsdl:part name="parameters" element="tns:SetNoOpModeByKeyResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_Convict_InputMessage">
+        <wsdl:part name="parameters" element="tns:Convict"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_Convict_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConvictResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_ConvictServiceInstance_InputMessage">
+        <wsdl:part name="parameters" element="tns:ConvictServiceInstance"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_ConvictServiceInstance_OutputMessage">
+        <wsdl:part name="parameters" element="tns:ConvictServiceInstanceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_DeployService_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeployService"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_DeployService_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeployServiceResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_DeployServiceToMachines_InputMessage">
+        <wsdl:part name="parameters" element="tns:DeployServiceToMachines"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_DeployServiceToMachines_OutputMessage">
+        <wsdl:part name="parameters" element="tns:DeployServiceToMachinesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_NotifyNodeFailure_InputMessage">
+        <wsdl:part name="parameters" element="tns:NotifyNodeFailure"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_NotifyNodeFailure_OutputMessage">
+        <wsdl:part name="parameters" element="tns:NotifyNodeFailureResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_RotationChanged_InputMessage">
+        <wsdl:part name="parameters" element="tns:RotationChanged"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_RotationChanged_OutputMessage">
+        <wsdl:part name="parameters" element="tns:RotationChangedResponse"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_Interrogate_InputMessage">
+        <wsdl:part name="parameters" element="tns:Interrogate"/>
+    </wsdl:message>
+    <wsdl:message name="IEosService_Interrogate_OutputMessage">
+        <wsdl:part name="parameters" element="tns:InterrogateResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="IEosService">
+        <wsdl:operation name="SetNodeMaintenanceModeByName">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/SetNodeMaintenanceModeByName"
+                        message="tns:IEosService_SetNodeMaintenanceModeByName_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/SetNodeMaintenanceModeByNameResponse"
+                         message="tns:IEosService_SetNodeMaintenanceModeByName_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetServiceInstanceMaintenanceModeByName">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/SetServiceInstanceMaintenanceModeByName"
+                        message="tns:IEosService_SetServiceInstanceMaintenanceModeByName_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/SetServiceInstanceMaintenanceModeByNameResponse"
+                         message="tns:IEosService_SetServiceInstanceMaintenanceModeByName_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetMaintenanceModeByList">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/SetMaintenanceModeByList"
+                        message="tns:IEosService_SetMaintenanceModeByList_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/SetMaintenanceModeByListResponse"
+                         message="tns:IEosService_SetMaintenanceModeByList_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="SetNoOpModeByKey">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/SetNoOpModeByKey"
+                        message="tns:IEosService_SetNoOpModeByKey_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/SetNoOpModeByKeyResponse"
+                         message="tns:IEosService_SetNoOpModeByKey_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Convict">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/Convict"
+                        message="tns:IEosService_Convict_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/ConvictResponse"
+                         message="tns:IEosService_Convict_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ConvictServiceInstance">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/ConvictServiceInstance"
+                        message="tns:IEosService_ConvictServiceInstance_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/ConvictServiceInstanceResponse"
+                         message="tns:IEosService_ConvictServiceInstance_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeployService">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/DeployService"
+                        message="tns:IEosService_DeployService_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/DeployServiceResponse"
+                         message="tns:IEosService_DeployService_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeployServiceToMachines">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/DeployServiceToMachines"
+                        message="tns:IEosService_DeployServiceToMachines_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/DeployServiceToMachinesResponse"
+                         message="tns:IEosService_DeployServiceToMachines_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="NotifyNodeFailure">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/NotifyNodeFailure"
+                        message="tns:IEosService_NotifyNodeFailure_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/NotifyNodeFailureResponse"
+                         message="tns:IEosService_NotifyNodeFailure_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="RotationChanged">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/RotationChanged"
+                        message="tns:IEosService_RotationChanged_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/RotationChangedResponse"
+                         message="tns:IEosService_RotationChanged_OutputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="Interrogate">
+            <wsdl:input wsam:Action="http://tempuri.org/IEosService/Interrogate"
+                        message="tns:IEosService_Interrogate_InputMessage"/>
+            <wsdl:output wsam:Action="http://tempuri.org/IEosService/InterrogateResponse"
+                         message="tns:IEosService_Interrogate_OutputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="WSHttpBinding_IEosService" type="tns:IEosService">
+        <wsp:PolicyReference URI="#WSHttpBinding_IEosService_policy"/>
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SetNodeMaintenanceModeByName">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/SetNodeMaintenanceModeByName"
+                              style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_SetNodeMaintenanceModeByName_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_SetNodeMaintenanceModeByName_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetServiceInstanceMaintenanceModeByName">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/SetServiceInstanceMaintenanceModeByName"
+                              style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference
+                        URI="#WSHttpBinding_IEosService_SetServiceInstanceMaintenanceModeByName_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference
+                        URI="#WSHttpBinding_IEosService_SetServiceInstanceMaintenanceModeByName_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetMaintenanceModeByList">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/SetMaintenanceModeByList" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_SetMaintenanceModeByList_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_SetMaintenanceModeByList_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetNoOpModeByKey">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/SetNoOpModeByKey" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_SetNoOpModeByKey_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_SetNoOpModeByKey_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Convict">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/Convict" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_Convict_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_Convict_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConvictServiceInstance">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/ConvictServiceInstance" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_ConvictServiceInstance_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_ConvictServiceInstance_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeployService">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/DeployService" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_DeployService_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_DeployService_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeployServiceToMachines">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/DeployServiceToMachines" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_DeployServiceToMachines_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_DeployServiceToMachines_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="NotifyNodeFailure">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/NotifyNodeFailure" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_NotifyNodeFailure_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_NotifyNodeFailure_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RotationChanged">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/RotationChanged" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_RotationChanged_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_RotationChanged_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Interrogate">
+            <soap12:operation soapAction="http://tempuri.org/IEosService/Interrogate" style="document"/>
+            <wsdl:input>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_Interrogate_Input_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <wsp:PolicyReference URI="#WSHttpBinding_IEosService_Interrogate_output_policy"/>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="BasicHttpBinding_IEosService" type="tns:IEosService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="SetNodeMaintenanceModeByName">
+            <soap:operation soapAction="http://tempuri.org/IEosService/SetNodeMaintenanceModeByName" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetServiceInstanceMaintenanceModeByName">
+            <soap:operation soapAction="http://tempuri.org/IEosService/SetServiceInstanceMaintenanceModeByName"
+                            style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetMaintenanceModeByList">
+            <soap:operation soapAction="http://tempuri.org/IEosService/SetMaintenanceModeByList" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SetNoOpModeByKey">
+            <soap:operation soapAction="http://tempuri.org/IEosService/SetNoOpModeByKey" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Convict">
+            <soap:operation soapAction="http://tempuri.org/IEosService/Convict" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ConvictServiceInstance">
+            <soap:operation soapAction="http://tempuri.org/IEosService/ConvictServiceInstance" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeployService">
+            <soap:operation soapAction="http://tempuri.org/IEosService/DeployService" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="DeployServiceToMachines">
+            <soap:operation soapAction="http://tempuri.org/IEosService/DeployServiceToMachines" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="NotifyNodeFailure">
+            <soap:operation soapAction="http://tempuri.org/IEosService/NotifyNodeFailure" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RotationChanged">
+            <soap:operation soapAction="http://tempuri.org/IEosService/RotationChanged" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Interrogate">
+            <soap:operation soapAction="http://tempuri.org/IEosService/Interrogate" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="EosService">
+        <wsdl:port name="WSHttpBinding_IEosService" binding="tns:WSHttpBinding_IEosService">
+            <soap12:address location="http://eos.sb.karmalab.net:8000/EosService"/>
+            <wsa10:EndpointReference>
+                <wsa10:Address>http://eos.sb.karmalab.net:8000/EosService</wsa10:Address>
+                <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+                    <Upn>s-eosorch@karmalab.net</Upn>
+                </Identity>
+            </wsa10:EndpointReference>
+        </wsdl:port>
+        <wsdl:port name="BasicHttpBinding_IEosService" binding="tns:BasicHttpBinding_IEosService">
+            <soap:address location="http://eos.sb.karmalab.net:8000/EosService/basic"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

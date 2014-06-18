@@ -54,6 +54,9 @@ public class SeyrenConfig {
     private final String snmpTimeout;
     private final String snmpRetries;
 
+    // EOS
+    private final String eosUrl;
+
     public SeyrenConfig() {
 
         // Base
@@ -91,6 +94,9 @@ public class SeyrenConfig {
         this.snmpCommunity = configOrDefault("SNMP_COMMUNITY","public");
         this.snmpTimeout = configOrDefault("SNMP_TIMEOUT","5000");
         this.snmpRetries = configOrDefault("SNMP_RETRIES","2");
+
+        // EOS
+        this.eosUrl = configOrDefault("EOS_URL","http://cheleweeos001:8000/eosservice");
     }
 
 
@@ -203,6 +209,10 @@ public class SeyrenConfig {
     public int getSnmpRetries(){
         return Integer.valueOf(snmpRetries);
     }
+
+    @JsonIgnore
+    public String getEosUrl() { return  eosUrl; }
+
 
     private static String configOrDefault(String propertyName, String defaultValue) {
         return configOrDefault(list(propertyName), defaultValue);

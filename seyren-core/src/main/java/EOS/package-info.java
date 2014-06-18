@@ -11,10 +11,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.seyren.core.domain;
-
-public enum SubscriptionType {
-    
-    EMAIL, PAGERDUTY, HIPCHAT, HUBOT, FLOWDOCK, SNMP, EOS
-    
-}
+@javax.xml.bind.annotation.XmlSchema(namespace = "http://tempuri.org/", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+package EOS;
