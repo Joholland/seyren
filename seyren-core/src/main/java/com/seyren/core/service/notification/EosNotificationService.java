@@ -109,7 +109,12 @@ public class EosNotificationService implements NotificationService {
 
         try {
             boolean result;
+            
+            // http://stackoverflow.com/questions/2490737/how-to-change-webservice-url-endpoint
+            // Check out option 2 for the accepted answer. [WLW]
+//          EosService eosSvc = new EosService(wsdlLocation, serviceName);
             EosService eosSvc = new EosService();
+            
             IEosService iEosSvc = eosSvc.getBasicHttpBindingIEosService();
             result = iEosSvc.notifyNodeFailure(hostname, key, message);
             LOGGER.info("Action=NotifyEOS, Result=" +result);
