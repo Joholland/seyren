@@ -30,7 +30,8 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "EosService", targetNamespace = "http://tempuri.org/", wsdlLocation = "http://eos.sb.karmalab.net:8000/eosservice?wsdl")
+//@WebServiceClient(name = "EosService", targetNamespace = "http://tempuri.org/", wsdlLocation = "http://eos.sb.karmalab.net:8000/eosservice?wsdl")
+@WebServiceClient(name = "EosService", targetNamespace = "http://tempuri.org/")
 public class EosService
     extends Service
 {

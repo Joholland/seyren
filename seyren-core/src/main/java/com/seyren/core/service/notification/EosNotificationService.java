@@ -21,6 +21,8 @@ import javax.inject.Named;
 import javax.jws.WebParam;
 import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
+import javax.xml.soap.SOAPFactory;
 import javax.xml.ws.WebServiceRef;
 
 import EOS.EosService;
@@ -42,7 +44,7 @@ import com.seyren.core.domain.Subscription;
 import com.seyren.core.domain.SubscriptionType;
 import com.seyren.core.exception.NotificationFailedException;
 import com.seyren.core.util.config.SeyrenConfig;
-
+import org.springframework.beans.factory.serviceloader.ServiceFactoryBean;
 
 
 /**
@@ -73,11 +75,15 @@ public class EosNotificationService implements NotificationService {
 
     @Override
     public void sendNotification(Check check, Subscription subscription, List<Alert> alerts) throws NotificationFailedException {
-        String hostname = "foo";
+        LOGGER.info("Send EOS Notification");
         try {
             if (check.getState() == AlertType.ERROR) {
-                String message = getEosMessage(check);
-                sendMessage(hostname, check.getName(), message);
+                for(Alert alert: alerts) {
+                    String hostname = getHostName(alert);
+                    String message = getEosMessage(check);
+                    sendMessage(hostname, check.getName(), message);
+                }
+
             } else {
                 LOGGER.warn("Did not send notification to Eos for check in state: {}", check.getState());
             }
@@ -86,50 +92,31 @@ public class EosNotificationService implements NotificationService {
         }
     }
 
+    private String getHostName(Alert alert) {
+        LOGGER.info(alert.getTarget());
+        String[] target = alert.getTarget().split("\\.");
+        String hostname = target[3];
+        return hostname;
+    }
+
     private String getEosMessage(Check check) {
         String message = "Check <a href=" + seyrenConfig.getBaseUrl() + "/#/checks/" + check.getId() + ">" + check.getName() + "</a> has entered its " + check.getState().toString() + " state.";
         return message;
     }
 
     private void sendMessage(String hostname, String key, String message) {
-        LOGGER.info("Posting: HostName={}, Key={}, Message={}", hostname, key, message);
-        //HttpClient client = new DefaultHttpClient();
-        //String url = "http://eos.sb.karmalab.net:8000/eosservice?wsdl";
-        //HttpPost post = new HttpPost(url);
-//        EOS.ObjectFactory factory = new ObjectFactory();
-//        JAXBElement<String> createHostName = factory.createNotifyNodeFailureHostname(hostname);
-//        JAXBElement<String> createFailureKey = factory.createNotifyNodeFailureFailureKey(key);
-//        JAXBElement<String> createDetails = factory.createNotifyNodeFailureDetails(message);
-
+        LOGGER.info("NotifyEOS: HostName={}, Key={}, Message={}", hostname, key, message);
 
         try {
-            // Send message to EOS here
-//            NotifyNodeFailure notifyObject= new NotifyNodeFailure();
-//            notifyObject.setHostname(createHostName);
-//            notifyObject.setFailureKey(createFailureKey);
-//            notifyObject.setDetails(createDetails);
-
-
-            EosService svc = new EosService();
-
-            IEosService nsvc = svc.getWSHttpBindingIEosService();
-            nsvc.notifyNodeFailure(hostname, key, message);
-            nsvc.notifyNodeFailure()
-
-//            LOGGER.info(svc.getPorts().toString());
-//            java.util.Iterator it = svc.getPorts();
-//            while (it.hasNext()) {
-//               LOGGER.info("value = " + it.next());
-//            }
-
-
+            boolean result;
+            EosService eosSvc = new EosService();
+            IEosService iEosSvc = eosSvc.getBasicHttpBindingIEosService();
+            result = iEosSvc.notifyNodeFailure(hostname, key, message);
+            LOGGER.info("Action=NotifyEOS, Result=" +result);
         }
         catch (Exception e) {
-            LOGGER.warn("Error posting to EOS", e);
-        } //finally {
-            //post.releaseConnection();
-        //}
-
+            LOGGER.warn("Action=NotifyEOS, Result=ERROR", e);
+        }
     }
 
     @Override

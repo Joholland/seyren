@@ -65,6 +65,7 @@ public class MongoMapper {
     }
     
     public Subscription subscriptionFrom(DBObject dbo) {
+
         String id = dbo.get("_id").toString();
         String target = getString(dbo, "target");
         SubscriptionType type = getSubscriptionType(getString(dbo, "type"));

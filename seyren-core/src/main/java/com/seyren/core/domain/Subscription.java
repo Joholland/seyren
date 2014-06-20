@@ -38,6 +38,14 @@ public class Subscription {
     private LocalTime fromTime;
     private LocalTime toTime;
     private boolean enabled;
+    private int hostPosition;
+
+    public int getHostPosition() { return hostPosition; }
+    public void  setHostPosition( int hostPosition) { this.hostPosition = hostPosition; }
+    public Subscription withHostPosition(int hostPosition){
+        setHostPosition(hostPosition);
+        return this;
+    }
     
     public String getId() {
         return id;
