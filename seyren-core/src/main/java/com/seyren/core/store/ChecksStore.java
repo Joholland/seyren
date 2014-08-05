@@ -15,6 +15,7 @@ package com.seyren.core.store;
 
 import java.util.Set;
 
+import com.seyren.core.domain.AlertType;
 import com.seyren.core.domain.Check;
 import com.seyren.core.domain.SeyrenResponse;
 
@@ -32,4 +33,5 @@ public interface ChecksStore {
     
     Check saveCheck(Check check);
     
+    void updateCheckState(String checkId, AlertType state);
 }

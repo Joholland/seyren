@@ -154,7 +154,7 @@ public class CheckScheduler {
                 }
                 
                 check.setState(worstState);
-                checksStore.saveCheck(check);
+                checksStore.updateCheckState(check.getId(), worstState);
                 
                 if (interestingAlerts.isEmpty()) {
                     return;

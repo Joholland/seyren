@@ -201,7 +201,8 @@ public class MongoMapper {
     }
     
     private boolean getBoolean(DBObject dbo, String key) {
-        return (Boolean) dbo.get(key);
+        Object booleanVal = dbo.get(key);
+        return booleanVal == null ? false : (Boolean) booleanVal;
     }
     
     private DateTime getDateTime(DBObject dbo, String key) {

@@ -34,8 +34,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.WriteConcern;
 import com.seyren.core.domain.Alert;
+import com.seyren.core.domain.AlertType;
 import com.seyren.core.domain.Check;
 import com.seyren.core.domain.GraphiteInstance;
 import com.seyren.core.domain.SeyrenResponse;
@@ -67,7 +67,23 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
             // Indexes for the queries used in this store
             this.getChecksCollection().ensureIndex(object("enabled", 1));
             this.getChecksCollection().ensureIndex(object("state", 1));
-            this.getChecksCollection().ensureIndex(BasicDBObjectBuilder.start().add("state", 1).add("enabled", 1).get());
+            this.getChecksCollection().ensureIndex(
+            		BasicDBObjectBuilder.start()
+            		.add("state", 1)
+            		.add("enabled", 1)
+            		.get());
+            this.getAlertsCollection().ensureIndex(
+            		BasicDBObjectBuilder.start()
+            		.add("checkId",1)
+            		.add("timestamp", -1)
+            		.get());
+            this.getAlertsCollection().ensureIndex(
+            		BasicDBObjectBuilder.start()
+            		.add("checkId", 1)
+            		.add("graphiteBaseUrl", 1)
+            		.add("target", 1)
+            		.add("timestamp", -1)
+            		.get());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -168,8 +184,7 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
                 .with("target", check.getTarget())
                 .with("warn", check.getWarn().toPlainString())
                 .with("error", check.getError().toPlainString())
-                .with("enabled", check.isEnabled())
-                .with("state", check.getState().toString());
+                .with("enabled", check.isEnabled());
         
         DBObject setObject = object("$set", updateObject);
         
@@ -177,6 +192,17 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
         
         return check;
     }
+    
+    @Override
+	public void updateCheckState(String checkId, AlertType state) {
+		notNull(checkId, "checkId can't be null");
+		notNull(state, "state can't be null");
+		
+		// Update just the check state without modifying the other fields
+		// Prevents the check scheduler from having a race condition w/
+		// the UI
+		getChecksCollection().findAndModify(forId(checkId), object("$set", object("state", state.toString())));
+	}
     
     @Override
     public Alert createAlert(String checkId, Alert alert) {
@@ -284,4 +310,5 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
     private DBCollection getGraphiteInstancesCollection() {
         return mongo.getCollection("graphiteInstances");
     }
+
 }
