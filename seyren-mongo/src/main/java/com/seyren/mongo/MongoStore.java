@@ -271,7 +271,7 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
         subscription.setId(ObjectId.get().toString());
         DBObject check = forId(checkId);
         DBObject query = object("$push", object("subscriptions", mapper.subscriptionToDBObject(subscription)));
-        getChecksCollection().update(check, query);
+        getChecksCollection().findAndModify(check, query);
         return subscription;
     }
     
@@ -279,7 +279,7 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
     public void deleteSubscription(String checkId, String subscriptionId) {
         DBObject check = forId(checkId);
         BasicDBObject subscription = object("$pull", object("subscriptions", forId(subscriptionId)));
-        getChecksCollection().update(check, subscription);
+        getChecksCollection().findAndModify(check, subscription);
     }
     
     @Override
@@ -288,7 +288,7 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
         DBObject subscriptionFindObject = forId(subscription.getId());
         DBObject checkFindObject = forId(checkId).with("subscriptions", object("$elemMatch", subscriptionFindObject));
         DBObject updateObject = object("$set", object("subscriptions.$", subscriptionObject));
-        getChecksCollection().update(checkFindObject, updateObject);
+        getChecksCollection().findAndModify(checkFindObject, updateObject);
     }
 
 	@Override
@@ -310,5 +310,4 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
     private DBCollection getGraphiteInstancesCollection() {
         return mongo.getCollection("graphiteInstances");
     }
-
 }
