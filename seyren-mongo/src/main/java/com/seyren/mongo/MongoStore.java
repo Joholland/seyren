@@ -27,11 +27,14 @@ import javax.inject.Named;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoURI;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.WriteConcern;
 import com.seyren.core.domain.Alert;
 import com.seyren.core.domain.Check;
 import com.seyren.core.domain.GraphiteInstance;
@@ -52,13 +55,19 @@ public class MongoStore implements ChecksStore, AlertsStore, SubscriptionsStore,
     @Inject
     public MongoStore(SeyrenConfig seyrenConfig) {
         try {
-            String uri = seyrenConfig.getMongoUrl();
-            MongoURI mongoUri = new MongoURI(uri);
-            DB mongo = mongoUri.connectDB();
-            if (mongoUri.getUsername() != null) {
-                mongo.authenticate(mongoUri.getUsername(), mongoUri.getPassword());
+            MongoClientURI mongoClientURI = new MongoClientURI(seyrenConfig.getMongoUrl());
+            MongoClient mongoClient = new MongoClient(mongoClientURI);		
+            DB mongo = mongoClient.getDB(mongoClientURI.getDatabase());
+            if (mongoClientURI.getUsername() != null) {
+                mongo.authenticate(mongoClientURI.getUsername(), mongoClientURI.getPassword());
             }
+            
             this.mongo = mongo;
+            
+            // Indexes for the queries used in this store
+            this.getChecksCollection().ensureIndex(object("enabled", 1));
+            this.getChecksCollection().ensureIndex(object("state", 1));
+            this.getChecksCollection().ensureIndex(BasicDBObjectBuilder.start().add("state", 1).add("enabled", 1).get());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
